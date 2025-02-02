@@ -4,272 +4,199 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Bestie: My love❤️</title>
+    <title>PostIt</title>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Anton+SC&family=Playwrite+PE:wght@100..400&display=swap');
-
         * {
-            margin: 0;
             padding: 0;
+            margin: 0;
+            font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+            color: white;
+        }
+
+        body {
+            height: 100vh;
+            width: 100vw;
+            background-image: url(/images/background.jpg);
+            background-size: 100% auto;
+        }
+
+        body::after {
+            content: '';
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            background-color: rgba(0, 0, 0, 0.8);
         }
 
         .container {
-            height: 100vh;
+            position: absolute;
+            width: min(600px, 100vw);
+            height: auto;
+            border-radius: 10px;
+            padding: 10px;
+            box-sizing: border-box;
+            font-size: 1.1rem;
+            font-weight: 600;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+
+            background-color: transparent;
+            backdrop-filter: blur(20px);
+            background-image: linear-gradient(120deg, rgba(255, 255, 255, 0.3), rgba(0, 0, 0, 0.2));
             display: flex;
-            align-items: center;
+            flex-direction: column;
+            justify-content: space-evenly;
+            overflow: clip;
+        }
+
+        .container>* {
+            margin: 40px 0;
+        }
+
+        .name {
+            display: flex;
             justify-content: center;
         }
 
-        .card {
-            background-color: pink;
-            width: 350px;
-            height: 500px;
-            border-radius: 8px;
-            position: relative;
-            transition: all 500ms ease-in-out;
+        .name input {
+            all: unset;
+            width: 90%;
+            padding: 12px 20px;
+            border-radius: 10px;
+            background-color: rgba(255, 94, 0, 0.3);
+            backdrop-filter: blur(100px);
         }
 
-        .cards {
-            width: 220px;
-            height: 300px;
-            background-color: beige;
-            position: absolute;
-            top: 100px;
-            left: 65px;
-            border-radius: 4px;
+        .name input::placeholder {
+            color: rgba(255, 255, 255, 0.6);
         }
 
-        .cards0 img {
-            width: 100%;
-            height: 100%;
-            position: absolute;
-            z-index: 11;
-        }
-
-        .cards1 {
-            font-family: "Anton SC", sans-serif;
-            font-weight: 400;
-            font-style: normal;
+        .file {
             display: flex;
             flex-direction: column;
-            z-index: 10;
+            align-items: center;
         }
 
-        .cards1 .big {
-            font-size: 32px;
-            margin-left: 10px;
-            color: rgb(81, 138, 165);
+        .file input {
+            padding: 10px;
         }
 
-        .cards1 .small {
-            font-size: small;
-            margin-left: 25px;
-            color: crimson;
+        .content {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            grid-template-rows: 1fr 1fr;
+            margin-left: 15px;
+
+            color: black;
         }
 
-        .cards1 img {
-            border-radius: 4px 4px 0 0;
-            width: 220px;
-            height: 165px;
+        .content span {
+            grid-row-start: 1;
+            grid-row-end: 2;
+            grid-column-start: 1;
+            grid-column-end: 4;
+            margin: 10px 0;
         }
 
-        .hidden {
-            display: none;
+        .btn {
+            display: flex;
+            justify-content: center;
         }
 
-        .cards2 {
-            z-index: 9;
-            overflow: hidden;
+        .btn button {
+            all: unset;
+            width: 90%;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(0, 255, 255, 0.3);
+            text-align: center;
+            transition: all 200ms ease-in-out;
         }
 
-        .cards2 img {
-            height: 100%;
-            border-radius: 4px;
-            position: absolute;
-            z-index: 8;
+        .btn:hover button {
+            background-color: rgba(0, 255, 255, 0.8);
         }
 
-        .cards2 span:nth-child(2) {
-            padding-right: 10px;
-            z-index: 9;
-            position: absolute;
-            bottom: 50px;
-            font-size: 36px;
-            font-family: "Playwrite PE", cursive;
-            font-optical-sizing: auto;
-            font-weight: 400;
-            font-style: italic;
-            color: rgb(185, 14, 14);
-            background-color: rgba(149, 213, 230, 0.411);
+        .file input::-webkit-file-upload-button {
+            all: unset;
+            padding: 10px;
+            border-radius: 10px;
+            background-color: rgba(110, 179, 224, 0.5);
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all 200ms ease-in-out;
+            font-weight: bolder;
         }
 
-        .cards2 span:nth-child(3) {
-            z-index: 9;
-            position: absolute;
-            bottom: -2px;
-            font-size: 13px;
-            font-family: "Playwrite PE", cursive;
-            font-optical-sizing: auto;
-            font-weight: 400;
-            font-style: italic;
-            color: rgb(255, 10, 10);
-            background-color: rgba(149, 230, 190, 0.411);
+        .file input::-webkit-file-upload-button:hover {
+            background-color: rgba(13, 69, 165, 0.603);
         }
 
-        .cards3 {
-            z-index: 8;
-            overflow: hidden;
-            object-fit: cover;
+        input[type="checkbox"] {
+            appearance: none;
+            background-color: #fff;
+            margin: 0;
+            font: inherit;
+            color: currentColor;
+            width: 1rem;
+            height: 1rem;
+            border: 0.15em solid currentColor;
+            border-radius: 0.15em;
+            transform: translateY(-0.075em);
+            display: grid;
+            place-items: center;
         }
 
-        .cards3 img {
-            width: 100%;
-            height: 165px;
+        input[type="checkbox"]::before {
+            content: "";
+            width: 0.65em;
+            height: 0.65em;
+            transform: scale(0);
+            transition: 120ms transform ease-in-out;
+            box-shadow: inset 1em 1em red;
         }
 
-        .cards3 .big {
-            font-family: Haettenschweiler, 'Arial Narrow Bold', sans-serif;
-            font-size: 18px;
-            display: block;
-            color: rgb(252, 156, 40);
-            padding-left: 2px;
+        input[type="checkbox"]:checked::before {
+            transform: scale(1);
         }
 
-        .cards3 .small {
-            font-family: Geneva, Tahoma, sans-serif;
-            display: block;
-            font-size: 15px;
-            padding-left: 6px;
-            color: rgb(226, 85, 151);
-        }
-
-        .cards4 img {
-            width: 100%;
-            height: 100%;
-            overflow: hidden;
-        }
-
-        .btn1 button,
-        .btn2 button {
-            width: 60px;
-            height: 60px;
-            z-index: 10;
-            background-color: rgb(129, 216, 129);
-            border-radius: 50%;
-            border: unset;
-            box-shadow: 4px 4px 10px rgb(42, 87, 79);
-        }
-
-        .btn1 {
-            position: absolute;
-            bottom: 35px;
-            left: 20px;
-        }
-
-        .btn2 {
-            position: absolute;
-            bottom: 35px;
-            right: 20px;
+        .content div {
+            display: flex;
+            align-items: center;
+            gap: 20px
         }
     </style>
 </head>
 
 <body>
-    <div class="container">
-        <div class="card">
-            <div class="cards cards0" id="cards0">
-                <img src="Resources/Pink and White Happy Birthday Design Poster.jpg" alt="Birthday wish">
+    <form class="container">
+        <div class="name">
+            <input type="text" name="name" id="name" placeholder="Enter Name of your friend" required>
+        </div>
+        <div class="file">
+            <label for="uploadFile">Choose the file you want to post to your friend</label>
+            <input type="file" name="uploadFile" id="uploadFile" required>
+        </div>
+        <div class="content">
+            <span>What does the file contain?</span>
+            <div>
+                <input type="checkbox" name="image" id="image">
+                <label for="image">Image</label>
             </div>
-            <div class="cards cards1 hidden" id="cards1">
-                <img src="Resources/20221122_121928.jpg" alt="My bestie">
-                <span class="big">Happy Birthday</span>
-                <span class="small">My Sweetheart, My Bestie</span>
-                <span class="small">My Jaanu, My Baby</span>
-                <span class="small">My Darling, My Babu</span>
+            <div>
+                <input type="checkbox" name="code" id="code">
+                <label for="code">Source Code</label>
             </div>
-            <div class="cards cards2 hidden" id="cards2">
-                <img src="Resources/20220804_125111.jpg" alt="My bestie">
-                <span class="big">My Bestie</span>
-                <span class="small">Thank for making my life bearable</span>
-            </div>
-            <div class="cards cards3 hidden" id="cards3">
-                <img src="Resources/20221123_150601.jpg" alt="My Sweetheart">
-                <span class="big">This one dedicated to our friendship:</span>
-                <span class="small">Khuda kare meri or</span>
-                <span class="small">Tumhari dosti itni khash ho</span>
-                <span class="small">Jab log hume sath me dekhe</span>
-                <span class="small">Toh kahe kash esa dost mere bhi paas ho</span>
-            </div>
-            <div class="cards cards4 hidden" id="cards4">
-                <img src="Resources/Last page.jpg" alt="last page">
-            </div>
-            <div class="btn1">
-                <button id="btn1"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                        color="#000000" fill="none">
-                        <path d="M4 12L20 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M8.99996 17C8.99996 17 4.00001 13.3176 4 12C3.99999 10.6824 9 7 9 7"
-                            stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg></button>
-            </div>
-            <div class="btn2">
-                <button id="btn2"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24"
-                        color="#000000" fill="none">
-                        <path d="M20 12L4 12" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                        <path d="M15 17C15 17 20 13.3176 20 12C20 10.6824 15 7 15 7" stroke="currentColor"
-                            stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" />
-                    </svg></button>
+            <div>
+                <input type="checkbox" name="bin" id="bin">
+                <label for="bin">Binary Code</label>
             </div>
         </div>
-    </div>
-
-    <script>
-        let btn1 = document.getElementById("btn1");
-        let btn2 = document.getElementById("btn2");
-        let card0 = document.getElementById("cards0");
-        let card1 = document.getElementById("cards1");
-        let card2 = document.getElementById("cards2");
-        let card3 = document.getElementById("cards3");
-        let card4 = document.getElementById("cards4");
-
-        btn2.onclick = function () {
-            if (card0.classList.value.search("cards cards0 hidden") == -1) {
-                card0.classList.add("hidden");
-                card1.classList.remove("hidden");
-            }
-            else if (card1.classList.value.search("cards cards1 hidden") == -1) {
-                card1.classList.add("hidden");
-                card2.classList.remove("hidden");
-            }
-            else if (card2.classList.value.search("cards cards2 hidden") == -1) {
-                card2.classList.add("hidden");
-                card3.classList.remove("hidden");
-            }
-            else if (card3.classList.value.search("cards cards3 hidden") == -1) {
-                card3.classList.add("hidden");
-                card4.classList.remove("hidden");
-            }
-        }
-        btn1.onclick = function () {
-            if (card1.classList.value.search("cards cards1 hidden") == -1) {
-                card1.classList.add("hidden");
-                card0.classList.remove("hidden");
-            }
-            else if (card2.classList.value.search("cards cards2 hidden") == -1) {
-                card2.classList.add("hidden");
-                card1.classList.remove("hidden");
-            }
-            else if (card3.classList.value.search("cards cards3 hidden") == -1) {
-                card3.classList.add("hidden");
-                card2.classList.remove("hidden");
-            }
-            else if (card4.classList.value.search("cards cards4 hidden") == -1) {
-                card4.classList.add("hidden");
-                card3.classList.remove("hidden");
-            }
-        }
-    </script>
+        <div class="btn">
+            <button type="submit">SUBMIT</button>
+        </div>
+    </form>
 </body>
 
 </html>
